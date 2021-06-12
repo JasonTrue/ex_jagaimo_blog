@@ -1,5 +1,5 @@
 <div>
-  <h1><%=@post.title%></h1>
+  <h1 class="text-4xl"><%=@post.title%></h1>
   <article class="post">
     <%= raw @post.story %>
   </article>
