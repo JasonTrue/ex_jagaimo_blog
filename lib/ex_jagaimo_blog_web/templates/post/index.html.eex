@@ -1,7 +1,8 @@
 <h1>Listing Posts</h1>
 
-<%= for post <- @posts do %>
-<%= render "post.html", conn: @conn, post: post %>
+<%= for post <- @entries do %>
+<%= render "_post.html", conn: @conn, post: post %>
 <% end %>
 
+<%= render "_pagination.html", conn: @conn, page: @page, count: @count, page_count: @page_count %>
 <span><%= link "New Post", to: Routes.post_path(@conn, :new) %></span>

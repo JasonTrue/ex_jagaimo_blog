@@ -1,0 +1,7 @@
+<%= if @page_count > 1 do %>
+  <div class="bg-green-100">
+    <%= for page <- 1..@page_count do %>
+      <%= link page, to: "?page=#{page}" %>
+    <% end %>
+  </div>
+<% end %>

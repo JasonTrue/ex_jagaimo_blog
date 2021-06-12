@@ -1,0 +1,6 @@
+<div>
+  <h1><%=@post.title%></h1>
+  <article class="post">
+    <%= raw @post.story %>
+  </article>
+</div>

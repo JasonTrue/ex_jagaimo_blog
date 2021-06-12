@@ -19,6 +19,15 @@ defmodule ExJagaimoBlogWeb.Router do
     get "/", LandingController, :index
     resources "/posts", PostController
     resources "/blogs", BlogController
+
+    scope "/archive" do
+      get "/tags/*tags", PostController, :index, as: :tags_archive
+      get "/", PostController, :index
+      get "/:year", PostController, :index
+      get "/:year/:month", PostController, :index
+      get "/:year/:month/:day", PostController, :index
+      get "/:year/:month/:day/:id", PostController, :show, as: :post_permalink
+    end
   end
 
   # Other scopes may use custom stacks.

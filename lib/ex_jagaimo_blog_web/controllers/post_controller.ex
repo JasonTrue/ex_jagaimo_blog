@@ -3,10 +3,22 @@ defmodule ExJagaimoBlogWeb.PostController do
 
   alias ExJagaimoBlog.Blogs
   alias ExJagaimoBlog.Blogs.Post
+  import ExJagaimoBlogWeb.Helpers.BlogHelper
 
-  def index(conn, _params) do
-    posts = Blogs.list_posts()
-    render(conn, "index.html", posts: posts)
+  def action(conn, _) do
+    conn = maybe_set_blog(conn)
+    args = [conn, conn.params]
+    apply(__MODULE__, action_name(conn), args)
+  end
+
+  def index(conn, params) do
+    paginated_posts = Blogs.query_posts()
+    |> Blogs.maybe_filter_post_by_blog(conn.assigns[:blog])
+    |> Blogs.maybe_filter_post_by_year(params["year"] |> parse_integer_or_nil())
+    |> Blogs.maybe_filter_post_by_month(params["month"] |> parse_integer_or_nil())
+    |> Blogs.maybe_filter_post_by_month(params["day"] |> parse_integer_or_nil())
+    |> Blogs.paginate(page: parse_page_number(params["page"]), page_size: 10)
+    render(conn, "index.html", paginated_posts)
   end
 
   def new(conn, _params) do
@@ -59,4 +71,23 @@ defmodule ExJagaimoBlogWeb.PostController do
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: Routes.post_path(conn, :index))
   end
+
+  defp parse_integer_or_nil(text) when is_binary(text) do
+    case Integer.parse(text) do
+      {integer, ""} -> integer
+      _other -> nil
+    end
+  end
+  defp parse_integer_or_nil(_), do: nil
+
+  defp parse_page_number(text) do
+    page_number = parse_integer_or_nil(text)
+    cond do
+      page_number == nil -> 1
+      page_number < 1 -> 1
+      true -> page_number
+    end
+  end
+
+
 end
