@@ -1,0 +1,7 @@
+<ul>
+    <%= for post <- @posts do%>
+      <li><%= link post.title, to: Routes.post_path(@conn, :show, :post_path), class: "text-white underline hover:text-yellow-300"%></li>
+    <% end %>
+</ul>
+
+<%= link gettext("More posts..."), to: Routes.post_path(@conn, :index), class: "text-white pt-2 hover:text-yellow-300"%>

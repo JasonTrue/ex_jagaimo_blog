@@ -1,0 +1,11 @@
+<section>
+    <main>
+        <h1 class="text-6xl hover:underline"><%=link @post.title, to: Routes.post_path(@conn, :show, @post) %></h1>
+        <address class="p-1"><%= @post.user.name %></address>
+        <article class="post">
+            <%= raw @post.story %>
+        </article>
+
+    </main>
+
+</section>

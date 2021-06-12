@@ -1,0 +1,13 @@
+<section>
+  <h1 class="p-3 text-3xl"><%= @blog.name %></h1>
+  <h2 class="p-3"><%= @blog.subheading %></h2>
+
+  <main class="p-3">
+    <%= if @top_post do %>
+      <%= render "_top_post.html", conn: @conn, post: @top_post %>
+    <% end %>
+  </main>
+  <section class="bg-blue-500 p-4">
+      <%= render("_links.html", conn: @conn, posts: @highlights) %>
+  </section>
+</section>
