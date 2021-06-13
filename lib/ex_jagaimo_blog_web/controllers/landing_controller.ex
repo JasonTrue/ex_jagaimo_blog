@@ -20,7 +20,7 @@ defmodule ExJagaimoBlogWeb.LandingController do
         _other -> {nil, []}
       end
 
-    render(conn, "index.html", top_post: top_post, highlights: highlights)
+    render(conn, "index.html", top_post: top_post, highlights: highlights, title: blog.name)
   end
 
   def index(conn, _params) do

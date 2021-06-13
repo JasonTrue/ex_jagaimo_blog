@@ -20,7 +20,7 @@ defmodule ExJagaimoBlogWeb.BlogController do
 
   def new(conn, _params) do
     changeset = Blogs.change_blog(%Blog{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, title: gettext("New blog"))
   end
 
   def create(conn, %{"blog" => blog_params}) do
@@ -31,13 +31,13 @@ defmodule ExJagaimoBlogWeb.BlogController do
         |> redirect(to: Routes.blog_path(conn, :show, blog))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, title: gettext("New blog"))
     end
   end
 
   def show(conn, %{"id" => id}) do
     blog = Blogs.get_blog!(id)
-    render(conn, "show.html", blog: blog)
+    render(conn, "show.html", blog: blog, title: gettext("Show blog configuration: %{blog_name}", blog_name: blog.name))
   end
 
   def edit(conn, %{"id" => id}) do

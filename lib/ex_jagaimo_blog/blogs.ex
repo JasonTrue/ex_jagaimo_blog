@@ -81,6 +81,13 @@ defmodule ExJagaimoBlog.Blogs do
     post_query
   end
 
+  def maybe_filter_post_by_year_month_day(post_query, %{} = ymd) do
+    post_query
+    |> maybe_filter_post_by_year(Map.get(ymd, :year))
+    |> maybe_filter_post_by_month(Map.get(ymd, :month))
+    |> maybe_filter_post_by_day(Map.get(ymd, :day))
+  end
+  
   def maybe_filter_post_by_year(post_query, nil), do: post_query
   def maybe_filter_post_by_year(post_query, year) do
     from post in post_query, where: fragment("date_part('year', ?)", post.publish_at) == ^year
