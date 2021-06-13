@@ -26,7 +26,7 @@ defmodule ExJagaimoBlog.Factory do
       blog: build(:blog),
       story: html_story(),
       approved: true,
-      slug: Factory.words(1..4) |> Enum.join("-")
+      slug: Faker.Lorem.words(1..4) |> Enum.join("-")
     }
   end
 

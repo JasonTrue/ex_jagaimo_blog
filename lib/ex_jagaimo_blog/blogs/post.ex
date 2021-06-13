@@ -19,6 +19,7 @@ defmodule ExJagaimoBlog.Blogs.Post do
     field :approved, :boolean
     field :slug, :string
     field :alternate_id, :integer
+    many_to_many :tags, ExJagaimoBlog.Tags.Tag, join_through: ExJagaimoBlog.Tags.PostTagging
     timestamps()
   end
 

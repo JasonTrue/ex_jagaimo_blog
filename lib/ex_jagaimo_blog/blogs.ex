@@ -52,8 +52,16 @@ defmodule ExJagaimoBlog.Blogs do
     Repo.all(Post)
   end
 
+  def list_latest_posts_for_blog(blog, count \\ 20) do
+    query_posts()
+    |> reverse_chronological()
+    |> filter_posts_by_blog(blog)
+    |> limit(^count)
+    |> Repo.all()
+  end
+
   def query_posts() do
-    from(post in Post)
+    from post in Post, preload: [:blog, :tags, :user]
   end
 
   def filter_posts_by_blog(post_query, %Blog{} = blog) do
@@ -62,15 +70,6 @@ defmodule ExJagaimoBlog.Blogs do
 
   def reverse_chronological(query) do
     from post in query, order_by: [desc: :publish_at]
-  end
-
-  def get_latest_posts_for_blog(blog, count \\ 20) do
-    query_posts()
-    |> reverse_chronological()
-    |> filter_posts_by_blog(blog)
-    |> limit(^count)
-    |> Repo.all()
-    |> Repo.preload(:user)
   end
 
   def maybe_filter_post_by_blog(post_query, %Blog{id: blog_id}) do

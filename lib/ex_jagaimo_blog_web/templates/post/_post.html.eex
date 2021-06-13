@@ -3,4 +3,14 @@
   <article class="post">
     <%= raw @post.story %>
   </article>
+  <footer class="bg-gray-200 p-2">
+    <div class="pb-2 font-bold">
+      <%= gettext("Tagged") %>
+    </div>
+    <div class="pr-2">
+      <%= for tag <- @post.tags do %>
+        <span class="btn"><%= tag.name %></span>
+      <% end %>
+    </div>
+  </footer>
 </div>

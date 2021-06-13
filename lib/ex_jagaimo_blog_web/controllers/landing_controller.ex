@@ -12,7 +12,7 @@ defmodule ExJagaimoBlogWeb.LandingController do
   end
 
   def index(%Plug.Conn{assigns: %{blog: %Blog{} = blog}} = conn, _params) do
-    posts = Blogs.get_latest_posts_for_blog(blog, 6)
+    posts = Blogs.list_latest_posts_for_blog(blog, 6)
 
     {top_post, highlights} =
       case posts do
