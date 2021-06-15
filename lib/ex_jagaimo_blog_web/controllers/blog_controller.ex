@@ -37,7 +37,11 @@ defmodule ExJagaimoBlogWeb.BlogController do
 
   def show(conn, %{"id" => id}) do
     blog = Blogs.get_blog!(id)
-    render(conn, "show.html", blog: blog, title: gettext("Show blog configuration: %{blog_name}", blog_name: blog.name))
+
+    render(conn, "show.html",
+      blog: blog,
+      title: gettext("Show blog configuration: %{blog_name}", blog_name: blog.name)
+    )
   end
 
   def edit(conn, %{"id" => id}) do

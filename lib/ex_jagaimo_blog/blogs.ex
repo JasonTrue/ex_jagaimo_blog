@@ -80,10 +80,17 @@ defmodule ExJagaimoBlog.Blogs do
     post_query
   end
 
+  def maybe_filter_posts_by_tag_names(post_query, nil), do: post_query
   def maybe_filter_posts_by_tag_names(post_query, []), do: post_query
-  def maybe_filter_posts_by_tag_names(post_query, [_ |_ ] = tag_names) do
-    from post in post_query, where:
-      post.id in subquery(from ptsub in query_posts_with_every_tag_name(tag_names), select: ptsub.id)
+
+  def maybe_filter_posts_by_tag_names(post_query, [_ | _] = tag_names) do
+    tag_names |> IO.inspect(label: "tag names")
+
+    from post in post_query,
+      where:
+        post.id in subquery(
+          from ptsub in query_posts_with_every_tag_name(tag_names), select: ptsub.id
+        )
   end
 
   def query_posts_with_every_tag_name([_ | _] = tag_names) do
@@ -94,25 +101,27 @@ defmodule ExJagaimoBlog.Blogs do
       having: count(tag.name) == ^length(tag_names)
   end
 
-
   def maybe_filter_post_by_year_month_day(post_query, %{} = ymd) do
     post_query
     |> maybe_filter_post_by_year(Map.get(ymd, :year))
     |> maybe_filter_post_by_month(Map.get(ymd, :month))
     |> maybe_filter_post_by_day(Map.get(ymd, :day))
   end
-  
+
   def maybe_filter_post_by_year(post_query, nil), do: post_query
+
   def maybe_filter_post_by_year(post_query, year) do
     from post in post_query, where: fragment("date_part('year', ?)", post.publish_at) == ^year
   end
 
   def maybe_filter_post_by_month(post_query, nil), do: post_query
+
   def maybe_filter_post_by_month(post_query, month) do
     from post in post_query, where: fragment("date_part('month', ?)", post.publish_at) == ^month
   end
 
   def maybe_filter_post_by_day(post_query, nil), do: post_query
+
   def maybe_filter_post_by_day(post_query, day) do
     from post in post_query, where: fragment("date_part('day', ?)", post.publish_at) == ^day
   end
@@ -127,19 +136,21 @@ defmodule ExJagaimoBlog.Blogs do
   }
 
   def paginate(post_query, options \\ []) do
-    pagination = %{page_size: page_size, page: current_page} = Enum.into(options, @default_pagination)
+    pagination =
+      %{page_size: page_size, page: current_page} = Enum.into(options, @default_pagination)
+
     count = Repo.aggregate(post_query, :count, :id)
     offset = (current_page - 1) * page_size
     page_count = trunc(count / page_size) + 1
 
-    posts = (from post in post_query)
-    |> offset(^offset)
-    |> limit(^page_size)
-    |> Repo.all()
+    posts =
+      from(post in post_query)
+      |> offset(^offset)
+      |> limit(^page_size)
+      |> Repo.all()
 
     %{pagination | entries: posts, offset: offset, page_count: page_count, count: count}
   end
-
 
   @doc """
   Gets a single post.

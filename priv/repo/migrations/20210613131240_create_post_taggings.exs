@@ -7,6 +7,8 @@ defmodule ExJagaimoBlog.Repo.Migrations.CreatePostTaggings do
       add :tag_id, references(:tags)
     end
 
-    execute("insert into post_taggings (post_id, tag_id) select taggable_id as post_id, tag_id from taggings where taggable_type='Post';")
+    execute(
+      "insert into post_taggings (post_id, tag_id) select taggable_id as post_id, tag_id from taggings where taggable_type='Post';"
+    )
   end
 end
