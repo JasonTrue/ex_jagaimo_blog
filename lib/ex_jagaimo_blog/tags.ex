@@ -11,6 +11,6 @@ defmodule ExJagaimoBlog.Tags do
     inner_join: tag in assoc(post, :tags),
     group_by: [tag.id, tag.name],
     order_by: [desc: count(post.id)],
-    select: {tag.id, tag.name, count(post.id)}
+    select: { count(post.id), tag.id, tag.name}
   end
 end
