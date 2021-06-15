@@ -1,1 +1,9 @@
-.asdf {}
+/* posts should be a bit less tailwind-like since authors aren't going to generally use tailwind CSS
+ So I'm applying some default styles to make, say, paragraphs work.
+ */
+.post { padding-top: 1em;}
+
+.post p {
+    line-height: 1.2em;
+    padding-bottom: 1em;
+}
