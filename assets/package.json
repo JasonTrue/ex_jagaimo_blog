@@ -17,15 +17,15 @@
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
+    "glob-parent": "^6.0.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "meow": "^10.0.1",
     "mini-css-extract-plugin": "^1.6.0",
-    "node-sass": "^4.14.1",
-    "optimize-css-assets-webpack-plugin": "^6.0.0",
-    "postcss": "^8.3.2",
+    "postcss": "^8.3.4",
     "postcss-loader": "^6.1.0",
     "sass-loader": "^10.2.0",
     "tailwindcss": "^2.1.4",
+    "trim-newlines": "^4.0.2",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"
   }
