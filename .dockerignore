@@ -1,0 +1,38 @@
+# .dockerignore
+.git
+Dockerfile
+
+# Mix artifacts
+_build
+deps
+*.ez
+
+# Generate on crash by the VM
+erl_crash.dump
+
+# Static artifacts
+**/node_modules
+
+# Things not needed to build Docker image at root
+TAG.txt
+Makefile
+docker-compose.yml
+rel
+
+#We don't usually run tests in the production container
+**/test
+
+# Developer-centric stuff
+.editorconfig
+.tool-versions
+.formatter-exs
+.env.example
+.env
+
+# IntelliJ cruft
+.idea
+**/*.iml
+
+/cover/
+/data/
+.DS_Store

@@ -9,7 +9,10 @@
     </div>
     <div class="pr-2">
       <%= for tag <- @post.tags do %>
-        <span class="btn bg-gray-100 rounded-t p-2 b-1"><%= tag.name %></span>
+
+        <span class="btn bg-gray-100 rounded-t p-2 b-1 mr-2">
+          <%= link tag.name, to: Routes.tags_archive_path(@conn, :index, [tag.name])%>
+        </span>
       <% end %>
     </div>
   </footer>

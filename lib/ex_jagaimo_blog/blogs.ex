@@ -84,8 +84,6 @@ defmodule ExJagaimoBlog.Blogs do
   def maybe_filter_posts_by_tag_names(post_query, []), do: post_query
 
   def maybe_filter_posts_by_tag_names(post_query, [_ | _] = tag_names) do
-    tag_names |> IO.inspect(label: "tag names")
-
     from post in post_query,
       where:
         post.id in subquery(

@@ -24,12 +24,12 @@ domain name.
 - Has some sort of historical archive view (organized by year/month/day)
 - Not important to you, but migrates my old Rails-based database schema to use
 Ecto conventions, while still (hopefully) having decent-ish greenfield migrations.
+- A tag cloud view (needs to be a bit more flexible.)
+- Filtering the archive by tags (Easy-ish! yay! may have some performance issues with larger databases)
   
 Things that I'm hoping to work on soon:
-- A tag cloud view
-- Filtering the archive by tags
-- Styling
 - Atom feed
+- Styling
 - ElasticSearch full-text search
 
 Things that I'm hoping to work on eventually:

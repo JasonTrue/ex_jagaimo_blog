@@ -10,4 +10,8 @@
   <section class="bg-blue-500 p-4">
       <%= render("_links.html", conn: @conn, posts: @highlights) %>
   </section>
+  <section class="bg-yellow-300 p-4">
+    <%= render("_tag_cloud.html", conn: @conn, tag_cloud: @tag_cloud) %>
+  </section>
+
 </section>
