@@ -14,9 +14,10 @@ defmodule ExJagaimoBlogWeb.LandingController do
   def index(%Plug.Conn{assigns: %{blog: %Blog{} = blog}} = conn, _params) do
     posts = Blogs.list_latest_posts_for_blog(blog, 6)
 
-    tag_cloud = ExJagaimoBlog.Tags.list_ranked_tags_by_blog(blog)
-    |> ExJagaimoBlog.Tags.normalize_tag_sizes()
-    |> ExJagaimoBlog.Tags.sort_tag_sizes_by_name()
+    tag_cloud =
+      ExJagaimoBlog.Tags.list_ranked_tags_by_blog(blog)
+      |> ExJagaimoBlog.Tags.normalize_tag_sizes()
+      |> ExJagaimoBlog.Tags.sort_tag_sizes_by_name()
 
     {top_post, highlights} =
       case posts do
@@ -24,7 +25,12 @@ defmodule ExJagaimoBlogWeb.LandingController do
         _other -> {nil, []}
       end
 
-    render(conn, "index.html", top_post: top_post, highlights: highlights, title: blog.name, tag_cloud: tag_cloud)
+    render(conn, "index.html",
+      top_post: top_post,
+      highlights: highlights,
+      title: blog.name,
+      tag_cloud: tag_cloud
+    )
   end
 
   def index(conn, _params) do
