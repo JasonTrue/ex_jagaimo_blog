@@ -12,7 +12,10 @@ defmodule ExJagaimoBlogWeb.PostController do
 
   def index(conn, params) do
     ymd = params |> convert_date_params_to_fields()
-    conn = conn |> assign(:title, construct_title(conn.assigns.blog, ymd))
+
+    conn =
+      conn
+      |> assign(:title, posts_list_title(conn.assigns[:blog], date: ymd, tags: params["tags"]))
 
     paginated_posts =
       Blogs.query_posts()

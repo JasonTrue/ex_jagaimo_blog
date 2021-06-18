@@ -2,22 +2,14 @@ defmodule ExJagaimoBlogWeb.PostControllerTest do
   use ExJagaimoBlogWeb.ConnCase
 
   #  alias ExJagaimoBlog.Posts
-  #
-  #  @create_attrs %{}
-  #  @update_attrs %{}
-  #  @invalid_attrs %{}
-  #
-  #  def fixture(:post) do
-  #    {:ok, post} = Posts.create_post(@create_attrs)
-  #    post
-  #  end
-  #
-  #  describe "index" do
-  #    test "lists all posts", %{conn: conn} do
-  #      conn = get(conn, Routes.post_path(conn, :index))
-  #      assert html_response(conn, 200) =~ "Listing Posts"
-  #    end
-  #  end
+
+  describe "index" do
+    test "with no blog, and no posts, show an empty posts list", %{conn: conn} do
+      conn = get(conn, Routes.post_path(conn, :index))
+      assert html_response(conn, 200) =~ "<title>Posts</title>"
+    end
+  end
+
   #
   #  describe "new post" do
   #    test "renders form", %{conn: conn} do

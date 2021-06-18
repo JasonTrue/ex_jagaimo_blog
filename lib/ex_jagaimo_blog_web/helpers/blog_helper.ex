@@ -28,34 +28,95 @@ defmodule ExJagaimoBlogWeb.Helpers.BlogHelper do
     |> Map.new()
   end
 
-  def construct_title(nil, params), do: construct_title("JagaimoBlog", params)
+  def has_date_filter?(params) do
+    params
+    |> Map.take(["year", "month", "day"])
+    |> Enum.any?()
+  end
 
-  def construct_title(blog, params) when map_size(params) == 0 do
-    gettext("Posts from %{blog_name}",
-      date: construct_date_from_params(params),
-      blog_name: blog.name
+  def posts_list_title(blog, params \\ []) do
+    opts =
+      params
+      |> Enum.into(%{date: nil, tags: nil})
+
+    build_posts_list_title(blog, opts)
+  end
+
+  defp build_posts_list_title(nil, %{date: nil, tags: nil}), do: gettext("Posts")
+
+  defp build_posts_list_title(nil, %{date: %{year: nil, month: nil, day: nil}, tags: nil}),
+    do: gettext("Posts")
+
+  defp build_posts_list_title(nil, %{date: %{} = date, tags: nil}) when map_size(date) == 0,
+    do: gettext("Posts")
+
+  defp build_posts_list_title(nil, %{date: %{} = date, tags: nil}) do
+    gettext("%{date} posts", date: construct_date_from_params(date))
+  end
+
+  defp build_posts_list_title(nil, %{date: %{} = date, tags: [_ | _] = tags}) do
+    joined_tags = tags |> Stream.map(fn tag -> "\"#{tag}\"" end) |> Enum.join(", ")
+
+    gettext("%{date} posts tagged %{tags}",
+      date: construct_date_from_params(date),
+      tags: joined_tags
     )
   end
 
-  def construct_title(blog, params) do
-    gettext("Posts from %{date}: %{blog_name}",
-      date: construct_date_from_params(params),
-      blog_name: blog.name
+  defp build_posts_list_title(%Blog{name: blog_name}, %{date: nil, tags: nil}),
+    do: gettext("Posts: %{blog_name}", blog_name: blog_name)
+
+  defp build_posts_list_title(%Blog{} = blog, %{
+         date: %{year: nil, month: nil, day: nil},
+         tags: nil
+       }),
+       do: build_posts_list_title(blog, %{date: nil, tags: nil})
+
+  defp build_posts_list_title(%Blog{name: blog_name}, %{date: %{} = date, tags: nil})
+       when map_size(date) == 0,
+       do: gettext("Posts: %{blog_name}", blog_name: blog_name)
+
+  defp build_posts_list_title(%Blog{name: blog_name}, %{date: %{} = date, tags: nil}) do
+    gettext("%{date} posts: %{blog_name}",
+      date: construct_date_from_params(date),
+      blog_name: blog_name
     )
+  end
+
+  defp build_posts_list_title(%Blog{name: blog_name}, %{date: date, tags: [_ | _] = tags})
+       when map_size(date) == 0 do
+    gettext("Posts tagged %{tags}: %{blog_name}", tags: join_tags(tags), blog_name: blog_name)
+  end
+
+  defp build_posts_list_title(%Blog{} = blog, %{
+         date: %{year: nil, month: nil, day: nil},
+         tags: [_ | _] = tags
+       }), do: build_posts_list_title(blog, %{date: %{}, tags: tags})
+
+  defp build_posts_list_title(%Blog{name: blog_name}, %{date: %{} = date, tags: [_ | _] = tags}) do
+    gettext("%{date} posts tagged %{tags}: %{blog_name}",
+      date: construct_date_from_params(date),
+      blog_name: blog_name,
+      tags: join_tags(tags)
+    )
+  end
+
+  defp join_tags([_ | _] = tags) do
+    tags |> Stream.map(fn tag -> "\"#{tag}\"" end) |> Enum.join(", ")
   end
 
   # A little sloppy, as it only returns the parameters; should translate month into month name
   # at least. (adds to TODO-list)
   def construct_date_from_params(%{year: year, month: month, day: day}),
-      do:
-        dgettext("datetime", "%{month} %{day}, %{year}",
-          year: year,
-          month: to_month_name(month),
-          day: day
-        )
+    do:
+      dgettext("datetime", "%{month} %{day}, %{year}",
+        year: year,
+        month: to_month_name(month),
+        day: day
+      )
 
   def construct_date_from_params(%{year: year, month: month}),
-      do: dgettext("datetime", "%{month} %{year}", year: year, month: to_month_name(month))
+    do: dgettext("datetime", "%{month} %{year}", year: year, month: to_month_name(month))
 
   def construct_date_from_params(%{year: year}), do: year
 
