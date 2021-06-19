@@ -17,6 +17,7 @@
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
+    "css-minimizer-webpack-plugin": "^3.0.1",
     "glob-parent": "^6.0.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "meow": "^10.0.1",
