@@ -4,6 +4,8 @@ env:
   MIX_ENV: test
 jobs:
   build:
+    except:
+      - tags
     services:
       db:
         image: postgres:12
