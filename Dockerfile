@@ -51,4 +51,4 @@ USER jagaimo
 #
 # If you want to run, say, a shell, invoke docker run with --entrypoint /bin/sh/
 
-ENTRYPOINT ["./prod/rel/ex_jagaimo_blog_web/bin/ex_jagaimo_blog"]
+ENTRYPOINT ["./prod/rel/ex_jagaimo_blog/bin/ex_jagaimo_blog"]
