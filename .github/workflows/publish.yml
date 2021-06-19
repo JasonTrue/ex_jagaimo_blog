@@ -18,6 +18,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags:
-            - jasontrue/jagaimoblog:latest
-            - jasontrue/jagaimoblog:${{ github.ref }}
+          tags: |
+            jasontrue/jagaimoblog:latest
+            jasontrue/jagaimoblog:${{ github.ref }}
