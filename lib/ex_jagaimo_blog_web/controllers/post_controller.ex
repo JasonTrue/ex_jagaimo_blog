@@ -26,4 +26,16 @@ defmodule ExJagaimoBlogWeb.PostController do
 
     render(conn, "index.html", paginated_posts)
   end
+
+  def show(conn, %{"id" => id} = params) do
+    ymd = params |> convert_date_params_to_fields()
+
+    post =
+      Blogs.query_posts()
+      |> Blogs.maybe_filter_posts_by_blog(conn.assigns[:blog])
+      |> Blogs.maybe_filter_post_by_year_month_day(ymd)
+      |> Blogs.select_post!(id)
+
+    render(conn, "show.html", post: post, title: post.title)
+  end
 end

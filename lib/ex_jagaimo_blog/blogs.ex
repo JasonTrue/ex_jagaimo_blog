@@ -166,6 +166,21 @@ defmodule ExJagaimoBlog.Blogs do
   """
   def get_post!(id), do: Repo.get!(Post, id)
 
+  def select_post(query, id) do
+    from post in query, where: post.slug == ^id
+  end
+
+  def select_post!(query, id) do
+    select_post(query, id)
+    |> Repo.one!()
+  end
+
+  def maybe_filter_posts_by_blog(query, %Blog{id: blog_id}) do
+    from post in query, where: post.blog_id == ^blog_id
+  end
+
+  def maybe_filter_posts_by_blog(query, nil), do: query
+
   @doc """
   Creates a post.
 

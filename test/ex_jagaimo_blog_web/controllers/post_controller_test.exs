@@ -10,6 +10,17 @@ defmodule ExJagaimoBlogWeb.PostControllerTest do
     end
   end
 
+  describe "show" do
+    test "with a blog which has a slug, find and show the page by slug", %{conn: conn} do
+      post = insert(:post, alternate_id: nil)
+
+      conn = get(conn, Routes.post_path(conn, :show, post.slug))
+
+      assert html_response(conn, 200) =~ "<title>#{post.title}</title>"
+      assert html_response(conn, 200) =~ post.story
+    end
+  end
+
   #
   #  describe "new post" do
   #    test "renders form", %{conn: conn} do

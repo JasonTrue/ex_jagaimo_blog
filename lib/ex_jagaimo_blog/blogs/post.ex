@@ -30,3 +30,10 @@ defmodule ExJagaimoBlog.Blogs.Post do
     |> validate_required([])
   end
 end
+
+defimpl Phoenix.Param, for: ExJagaimoBlog.Blogs.Post do
+  alias ExJagaimoBlog.Blogs.Post
+  def to_param(%Post{slug: nil, alternate_id: nil, id: id}), do: id
+  def to_param(%Post{slug: nil, alternate_id: id}), do: id
+  def to_param(%Post{slug: slug}), do: slug
+end
