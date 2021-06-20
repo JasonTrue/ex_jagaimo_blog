@@ -22,7 +22,7 @@ defmodule ExJagaimoBlogWeb.Router do
 
     scope "/archive" do
       get "/tags/*tags", PostController, :index, as: :tags_archive
-      get "/", PostController, :index
+      get "/", PostController, :index, as: :archive
       get "/:year", PostController, :index
       get "/:year/:month", PostController, :index
       get "/:year/:month/:day", PostController, :index

@@ -65,7 +65,7 @@ defmodule ExJagaimoBlogWeb do
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
-
+      import ExJagaimoBlogWeb.CommonViewHelpers
       import ExJagaimoBlogWeb.ErrorHelpers
       import ExJagaimoBlogWeb.Gettext
       alias ExJagaimoBlogWeb.Router.Helpers, as: Routes
