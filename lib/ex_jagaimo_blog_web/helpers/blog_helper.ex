@@ -91,7 +91,8 @@ defmodule ExJagaimoBlogWeb.Helpers.BlogHelper do
   defp build_posts_list_title(%Blog{} = blog, %{
          date: %{year: nil, month: nil, day: nil},
          tags: [_ | _] = tags
-       }), do: build_posts_list_title(blog, %{date: %{}, tags: tags})
+       }),
+       do: build_posts_list_title(blog, %{date: %{}, tags: tags})
 
   defp build_posts_list_title(%Blog{name: blog_name}, %{date: %{} = date, tags: [_ | _] = tags}) do
     gettext("%{date} posts tagged %{tags}: %{blog_name}",
