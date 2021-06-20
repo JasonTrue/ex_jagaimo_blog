@@ -27,8 +27,8 @@ RUN apk add --update --no-cache --virtual .gyp npm nodejs-current python2 make g
 
 # Copy over the build artifact from the previous step and create a non root user
 RUN adduser -h /home/jagaimo -D jagaimo
-WORKDIR /home/app
-COPY --from=app_builder --chown=app /app/_build .
+WORKDIR /home/jagaimo
+COPY --from=app_builder --chown=jagaimo /app/_build .
 USER jagaimo
 
 # Set the default entry point.
