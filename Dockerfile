@@ -23,7 +23,7 @@ FROM alpine AS jagaimoblog
 ENV LANG=C.UTF-8
 
 # Install openssl
-RUN apk add --no-cache openssl ncurses-libs
+RUN apk add --update --no-cache --virtual .gyp npm nodejs-current python2 make g++ git
 
 # Copy over the build artifact from the previous step and create a non root user
 RUN adduser -h /home/jagaimo -D jagaimo
