@@ -27,7 +27,8 @@ defmodule ExJagaimoBlog.Factory do
       story: html_story(),
       approved: true,
       slug: Faker.Lorem.words(1..4) |> Enum.join("-"),
-      alternate_id: nil
+      alternate_id: nil,
+      publish_at: DateTime.utc_now
     }
   end
 
