@@ -42,10 +42,28 @@ defmodule ExJagaimoBlogWeb do
     end
   end
 
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {ExJagaimoBlogWeb.LayoutView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(view_helpers())
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router
 
+      import Phoenix.LiveView.Router
       import Plug.Conn
       import Phoenix.Controller
     end
@@ -68,6 +86,8 @@ defmodule ExJagaimoBlogWeb do
       import ExJagaimoBlogWeb.CommonViewHelpers
       import ExJagaimoBlogWeb.ErrorHelpers
       import ExJagaimoBlogWeb.Gettext
+      import Phoenix.LiveView.Helpers
+
       alias ExJagaimoBlogWeb.Router.Helpers, as: Routes
     end
   end

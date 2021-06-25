@@ -34,6 +34,7 @@ defmodule ExJagaimoBlog.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.4"},
+      {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:phoenix, "~> 1.5.9"},

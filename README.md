@@ -26,7 +26,8 @@ domain name.
 Ecto conventions, while still (hopefully) having decent-ish greenfield migrations.
 - A tag cloud view (needs to be a bit more flexible.)
 - Filtering the archive by tags (Easy-ish! yay! may have some performance issues with larger databases)
-  
+- Dockerized if you're into that sort of thing
+
 Things that I'm hoping to work on soon:
 - Atom feed
 - Styling
