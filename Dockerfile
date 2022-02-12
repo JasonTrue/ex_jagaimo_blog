@@ -1,4 +1,5 @@
-FROM hexpm/elixir:1.12.1-erlang-24.0.2-alpine-3.13.3 as app_builder
+FROM hexpm/elixir:1.13.3-erlang-24.2.1-alpine-3.15.0 as app_builder
+
 # Set environment variables for building the application
 ENV MIX_ENV=prod \
     LANG=C.UTF-8
