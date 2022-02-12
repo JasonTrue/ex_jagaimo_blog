@@ -34,7 +34,6 @@ defmodule ExJagaimoBlog.Factory do
 
   def html_story do
     Faker.Lorem.paragraphs()
-    |> Enum.map(fn p -> "<p>#{p}</p>" end)
-    |> Enum.join("\n\n")
+    |> Enum.map_join("\n\n", fn p -> "<p>#{p}</p>" end)
   end
 end
