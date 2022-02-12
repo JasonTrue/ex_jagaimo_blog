@@ -19,6 +19,8 @@ defmodule ExJagaimoBlogWeb.PostController do
 
     paginated_posts =
       Blogs.query_posts()
+      |> Blogs.preload_post_associations()
+      |> Blogs.reverse_chronological()
       |> Blogs.maybe_filter_post_by_blog(conn.assigns[:blog])
       |> Blogs.maybe_filter_post_by_year_month_day(ymd)
       |> Blogs.maybe_filter_posts_by_tag_names(params["tags"])
@@ -32,6 +34,7 @@ defmodule ExJagaimoBlogWeb.PostController do
 
     post =
       Blogs.query_posts()
+      |> Blogs.preload_post_associations()
       |> Blogs.maybe_filter_posts_by_blog(conn.assigns[:blog])
       |> Blogs.maybe_filter_post_by_year_month_day(ymd)
       |> Blogs.select_post!(id)

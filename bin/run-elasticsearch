@@ -1,0 +1,2 @@
+docker run --name jaga-es -d -p 9200:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:8.7.0
+

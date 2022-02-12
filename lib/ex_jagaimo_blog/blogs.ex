@@ -54,6 +54,7 @@ defmodule ExJagaimoBlog.Blogs do
 
   def list_latest_posts_for_blog(blog, count \\ 20) do
     query_posts()
+    |> preload_post_associations()
     |> reverse_chronological()
     |> filter_posts_by_blog(blog)
     |> limit(^count)
@@ -61,7 +62,11 @@ defmodule ExJagaimoBlog.Blogs do
   end
 
   def query_posts() do
-    from post in Post, preload: [:blog, :tags, :user]
+    from(post in Post)
+  end
+
+  def preload_post_associations(post_query, preload_argument \\ [:blog, :tags, :user]) do
+    from post in post_query, preload: ^preload_argument
   end
 
   def filter_posts_by_blog(post_query, %Blog{} = blog) do
