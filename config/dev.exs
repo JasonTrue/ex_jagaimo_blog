@@ -9,6 +9,15 @@ config :ex_jagaimo_blog, ExJagaimoBlog.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :ex_jagaimo_blog, ExJagaimoBlog.Search.Cluster,
+  #  url: "https://localhost:9200",
+  #  username: elastic_username,
+  #  password: elastic_password,
+  # obviously a bad solution in prod, but for now it works
+  http_client_adapter:
+    {Snap.HTTPClient.Adapters.Finch,
+     pool_size: 20, conn_opts: [transport_opts: [verify: :verify_peer, cacertfile: 'priv/dev/http_ca.crt']]}
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -31,8 +40,8 @@ config :ex_jagaimo_blog, ExJagaimoBlogWeb.Endpoint,
     ]
   ],
   domain_opts: [
-    host_suffix: ".lvh.me",
-    optional_suffixes: [".lvh.me"]
+    host_suffix: ".localtest.me",
+    optional_suffixes: [".localtest.me"]
   ]
 
 # ## SSL Support

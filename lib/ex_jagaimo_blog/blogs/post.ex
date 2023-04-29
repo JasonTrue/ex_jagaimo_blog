@@ -29,6 +29,46 @@ defmodule ExJagaimoBlog.Blogs.Post do
     |> cast(attrs, [])
     |> validate_required([])
   end
+
+  @doc """
+      Converts a %Post{} to an ElasticSearch document. May raise
+      Floki.ParseError if the `post.story` html is broken.
+
+      Expects tags, blog and user attributes to be preloaded.
+  """
+  def to_elastic_doc!(%__MODULE__{} = post) do
+    case to_elastic_doc(post) do
+      {:ok, elastic_doc} -> elastic_doc
+      {:error, context} -> raise ExJagaimoBlog.PostError, message: context
+    end
+  end
+
+  @doc """
+      Converts a %Post{} to an ElasticSearch document.
+
+      Expects tags, blog and user attributes to be preloaded.
+  """
+  def to_elastic_doc(%__MODULE__{} = post) do
+    case Floki.parse_fragment(post.story) do
+      {:ok, story_parsed} ->
+        %{
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          blog: %{
+            id: post.blog.id,
+            name: post.blog.name
+          },
+          author: post.user.name,
+          publish_at: post.publish_at,
+          story_text: Floki.text(story_parsed),
+          tags: post.tags |> Enum.map(& &1.name)
+        }
+
+      error ->
+        error
+    end
+  end
 end
 
 defimpl Phoenix.Param, for: ExJagaimoBlog.Blogs.Post do

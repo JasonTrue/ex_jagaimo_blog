@@ -1,5 +1,8 @@
 <div>
   <h1 class="text-4xl"><%=link @post.title, to: permalink_path(@conn, @post) %></h1>
+  <div>
+    <%= Timex.format!(@post.publish_at, "{Mfull} {D}, {YYYY}, {h12}:{m} {AM}")%>
+  </div>
   <article class="post">
     <%= raw @post.story %>
   </article>

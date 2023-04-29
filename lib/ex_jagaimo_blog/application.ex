@@ -9,6 +9,7 @@ defmodule ExJagaimoBlog.Application do
     children = [
       # Start the Ecto repository
       ExJagaimoBlog.Repo,
+      ExJagaimoBlog.Search.Cluster,
       # Start the Telemetry supervisor
       ExJagaimoBlogWeb.Telemetry,
       # Start the PubSub system
