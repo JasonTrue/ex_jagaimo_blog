@@ -22,6 +22,7 @@ defmodule ExJagaimoBlogWeb do
       use Phoenix.Controller, namespace: ExJagaimoBlogWeb
 
       import Plug.Conn
+      import Phoenix.LiveView.Controller
       import ExJagaimoBlogWeb.Gettext
       alias ExJagaimoBlogWeb.Router.Helpers, as: Routes
     end
@@ -31,6 +32,7 @@ defmodule ExJagaimoBlogWeb do
     quote do
       use Phoenix.View,
         root: "lib/ex_jagaimo_blog_web/templates",
+        pattern: "**/*",
         namespace: ExJagaimoBlogWeb
 
       # Import convenience functions from controllers
@@ -82,7 +84,6 @@ defmodule ExJagaimoBlogWeb do
       use Phoenix.HTML
 
       # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
       import ExJagaimoBlogWeb.CommonViewHelpers
       import ExJagaimoBlogWeb.ErrorHelpers
       import ExJagaimoBlogWeb.Gettext

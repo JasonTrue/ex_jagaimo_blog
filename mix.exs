@@ -7,7 +7,7 @@ defmodule ExJagaimoBlog.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,17 +33,19 @@ defmodule ExJagaimoBlog.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:credo, "~> 1.6", only: :dev},
-      {:ecto_sql, "~> 3.7"},
+      {:credo, "~> 1.7", only: :dev},
+      {:dialyxir, "~> 1.3", runtime: false},
+      {:ecto_sql, "~> 3.10"},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17.0", only: :test},
-      {:finch, "~> 0.11.0"},
-      {:floki, ">= 0.30.0"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:phoenix, "~> 1.6"},
+      {:finch, "~> 0.16"},
+      {:floki, "~> 0.34"},
+      {:gettext, "~> 0.22"},
+      {:jason, "~> 1.4"},
+      {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 3.0"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.0"},
@@ -51,7 +53,7 @@ defmodule ExJagaimoBlog.MixProject do
       {:snap, "~> 0.6"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:timex, "~> 3.7.5"}
+      {:timex, "~> 3.7"}
     ]
   end
 

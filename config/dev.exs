@@ -16,7 +16,8 @@ config :ex_jagaimo_blog, ExJagaimoBlog.Search.Cluster,
   # obviously a bad solution in prod, but for now it works
   http_client_adapter:
     {Snap.HTTPClient.Adapters.Finch,
-     pool_size: 20, conn_opts: [transport_opts: [verify: :verify_peer, cacertfile: 'priv/dev/http_ca.crt']]}
+     pool_size: 20,
+     conn_opts: [transport_opts: [verify: :verify_peer, cacertfile: 'priv/dev/http_ca.crt']]}
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
