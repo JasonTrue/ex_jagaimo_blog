@@ -11,7 +11,7 @@ RUN mix local.hex --force && \
 # Create the application build directory
 RUN mkdir /app
 WORKDIR /app
-RUN apk add --update --virtual .gyp npm nodejs-current python2 make g++ git
+RUN apk add --update --virtual npx npm nodejs-current make g++ git
 
 COPY . ./
 RUN mix deps.get
@@ -19,12 +19,11 @@ RUN npm install --prefix ./assets && npm run deploy --prefix ./assets && mix phx
 RUN mix release
 
 # ---- Application Stage ----
-FROM alpine AS jagaimoblog
+FROM alpine:3.17.3 AS jagaimoblog
 
 ENV LANG=C.UTF-8
 
-# Install openssl
-RUN apk add --update --no-cache --virtual .gyp npm nodejs-current python2 make g++ git
+RUN apk add --update --virtual openssl ncurses-libs libstdc++ libgcc
 
 # Copy over the build artifact from the previous step and create a non root user
 RUN adduser -h /home/jagaimo -D jagaimo
