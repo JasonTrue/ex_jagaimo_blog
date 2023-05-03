@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.13.3-erlang-24.2.1-alpine-3.15.0 as app_builder
+FROM hexpm/elixir:1.14.4-erlang-25.3.1-alpine-3.17.3 as app_builder
 
 # Set environment variables for building the application
 ENV MIX_ENV=prod \
@@ -11,7 +11,7 @@ RUN mix local.hex --force && \
 # Create the application build directory
 RUN mkdir /app
 WORKDIR /app
-RUN apk add --update --virtual .gyp npm nodejs-current python2 make g++ git
+RUN apk add --update --virtual npx npm nodejs-current make g++ git
 
 COPY . ./
 RUN mix deps.get
@@ -19,17 +19,16 @@ RUN npm install --prefix ./assets && npm run deploy --prefix ./assets && mix phx
 RUN mix release
 
 # ---- Application Stage ----
-FROM alpine AS jagaimoblog
+FROM alpine:3.17.3 AS jagaimoblog
 
 ENV LANG=C.UTF-8
 
-# Install openssl
-RUN apk add --update --no-cache --virtual .gyp npm nodejs-current python2 make g++ git
+RUN apk add --update --virtual openssl ncurses-libs libstdc++ libgcc
 
 # Copy over the build artifact from the previous step and create a non root user
 RUN adduser -h /home/jagaimo -D jagaimo
 WORKDIR /home/jagaimo
-COPY --from=app_builder --chown=jagaimo /app/_build .
+COPY --from=app_builder --chown=jagaimo /app/_build/prod/rel/ex_jagaimo_blog .
 USER jagaimo
 
 # Set the default entry point.
@@ -52,4 +51,4 @@ USER jagaimo
 #
 # If you want to run, say, a shell, invoke docker run with --entrypoint /bin/sh/
 
-ENTRYPOINT ["./prod/rel/ex_jagaimo_blog/bin/ex_jagaimo_blog"]
+ENTRYPOINT ["./bin/ex_jagaimo_blog"]

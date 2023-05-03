@@ -17,18 +17,14 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        otp: ["24.2.1"]
-        elixir: ["1.13.3"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-elixir@v1
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
+          version-file: ".tool-versions"
+          version-type: strict
       - name: Mix dependencies cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: mix-cache
         with:
           path: |
@@ -37,8 +33,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
       - run: mix deps.get
       - run: mix format --check-formatted
-        if: matrix.elixir == '1.12' # Only check formatting with the latest version
       - run: mix compile --warnings-as-errors
       - run: mix test
-      - run: mix dialyzer
-        if: matrix.elixir == '1.12' # Only check dialyzer with the latest version
+# We should add the following after getting dialyzer warnings taken care of
+#      - run: mix dialyzer

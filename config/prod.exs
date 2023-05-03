@@ -16,6 +16,14 @@ config :ex_jagaimo_blog, ExJagaimoBlogWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :ex_jagaimo_blog, ExJagaimoBlog.Search.Cluster,
+  http_client_adapter:
+    {Snap.HTTPClient.Adapters.Finch,
+     pool_size: 20,
+     conn_opts: [
+       transport_opts: [verify: :verify_peer, cacertfile: '/etc/jagaimoblog/elastic_http_ca.crt']
+     ]}
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
