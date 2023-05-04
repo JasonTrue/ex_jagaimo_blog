@@ -89,7 +89,7 @@ defmodule ExJagaimoBlog.Search do
   defp snap_bulk_index(post) do
     %Snap.Bulk.Action.Index{
       _id: post.id,
-      doc: ExJagaimoBlog.Blogs.Post.to_elastic_doc(post)
+      doc: ExJagaimoBlog.Blogs.Post.to_elastic_doc!(post)
     }
   end
 end

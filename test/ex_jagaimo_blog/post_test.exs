@@ -15,11 +15,12 @@ defmodule ExJagaimo.Blogs.PostTest do
     tags: [%Tag{name: "Tag1"}, %Tag{name: "Tag2"}]
   }
   test "Can convert post to elastic document " do
-    assert %{
-             id: 1,
-             blog: %{id: 1, name: "Example blog"},
-             title: "Title",
-             tags: ["Tag1", "Tag2"]
-           } = Post.to_elastic_doc(@good_post)
+    assert {:ok,
+            %{
+              id: 1,
+              blog: %{id: 1, name: "Example blog"},
+              title: "Title",
+              tags: ["Tag1", "Tag2"]
+            }} = Post.to_elastic_doc(@good_post)
   end
 end
