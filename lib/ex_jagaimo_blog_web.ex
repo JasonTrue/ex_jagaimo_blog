@@ -88,6 +88,7 @@ defmodule ExJagaimoBlogWeb do
       import ExJagaimoBlogWeb.ErrorHelpers
       import ExJagaimoBlogWeb.Gettext
       import Phoenix.LiveView.Helpers
+      import Phoenix.Component
 
       alias ExJagaimoBlogWeb.Router.Helpers, as: Routes
     end
