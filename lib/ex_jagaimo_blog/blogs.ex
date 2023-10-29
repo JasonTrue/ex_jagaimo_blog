@@ -278,7 +278,8 @@ defmodule ExJagaimoBlog.Blogs do
       {:error, ...}
 
   """
-  def create_blog(_attrs \\ %{}) do
+  @spec create_blog(map()) :: no_return()
+  def create_blog(_attrs = %{}) do
     raise "TODO"
   end
 
@@ -294,6 +295,7 @@ defmodule ExJagaimoBlog.Blogs do
       {:error, ...}
 
   """
+  @spec update_blog(%Blog{}, map()) :: no_return()
   def update_blog(%Blog{} = _blog, _attrs) do
     raise "TODO"
   end
@@ -323,7 +325,8 @@ defmodule ExJagaimoBlog.Blogs do
       %Todo{...}
 
   """
-  def change_blog(%Blog{} = _blog, _attrs \\ %{}) do
-    raise "TODO"
+
+  def change_blog(%Blog{} = blog, attrs \\ %{}) do
+    Blog.changeset(blog, attrs)
   end
 end

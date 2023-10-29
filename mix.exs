@@ -34,7 +34,7 @@ defmodule ExJagaimoBlog.MixProject do
   defp deps do
     [
       {:credo, "~> 1.7", only: :dev},
-      {:dialyxir, "~> 1.3", runtime: false},
+      {:dialyxir, "~> 1.4", runtime: false},
       {:ecto_sql, "~> 3.10"},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17.0", only: :test},

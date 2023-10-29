@@ -51,19 +51,20 @@ defmodule ExJagaimoBlog.Blogs.Post do
   def to_elastic_doc(%__MODULE__{} = post) do
     case Floki.parse_fragment(post.story) do
       {:ok, story_parsed} ->
-        %{
-          id: post.id,
-          title: post.title,
-          slug: post.slug,
-          blog: %{
-            id: post.blog.id,
-            name: post.blog.name
-          },
-          author: post.user.name,
-          publish_at: post.publish_at,
-          story_text: Floki.text(story_parsed),
-          tags: post.tags |> Enum.map(& &1.name)
-        }
+        {:ok,
+         %{
+           id: post.id,
+           title: post.title,
+           slug: post.slug,
+           blog: %{
+             id: post.blog.id,
+             name: post.blog.name
+           },
+           author: post.user.name,
+           publish_at: post.publish_at,
+           story_text: Floki.text(story_parsed),
+           tags: post.tags |> Enum.map(& &1.name)
+         }}
 
       error ->
         error
