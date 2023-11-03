@@ -35,7 +35,7 @@ end
 
 elastic_username = System.get_env("ELASTIC_USERNAME", "elastic")
 elastic_password = System.get_env("ELASTIC_PASSWORD")
-elastic_uri = System.get_env("ELASTIC_URI", "https://localhost:9200")
+elastic_uri = System.get_env("ELASTIC_URI", "http://localhost:9200")
 
 config :ex_jagaimo_blog,
        ExJagaimoBlog.Search.Cluster,

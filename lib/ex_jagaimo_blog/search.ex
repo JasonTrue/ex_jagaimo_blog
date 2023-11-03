@@ -86,6 +86,34 @@ defmodule ExJagaimoBlog.Search do
     end)
   end
 
+  @doc """
+    Naive search that checks the title/story_text/tags fields for a particular blog.
+
+    May offer a mechanism for querying specific fields later but keeping it simple
+    for now.
+  """
+  @default_fulltext_fields ["title", "story_text", "tags"]
+  def search(blog_id, query, opts \\ [])
+
+  def search(blog_id, query, _opts) do
+    Snap.Search.search(ExJagaimoBlog.Search.Cluster, "posts", %{
+      query: %{
+        bool: %{
+          must: %{
+            multi_match: %{
+              "query" => query,
+              fields: @default_fulltext_fields
+            }
+          },
+          filter: [
+            %{term: %{"blog.id" => blog_id}},
+            %{range: %{"publish_at" => %{"lte" => DateTime.utc_now()}}}
+          ]
+        }
+      }
+    })
+  end
+
   defp snap_bulk_index(post) do
     %Snap.Bulk.Action.Index{
       _id: post.id,
