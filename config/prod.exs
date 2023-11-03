@@ -21,7 +21,10 @@ config :ex_jagaimo_blog, ExJagaimoBlog.Search.Cluster,
     {Snap.HTTPClient.Adapters.Finch,
      pool_size: 20,
      conn_opts: [
-       transport_opts: [verify: :verify_peer, cacertfile: '/etc/jagaimoblog/elastic_http_ca.crt']
+       transport_opts: [
+         verify: :verify_peer,
+         cacertfile: '/etc/jagaimoblog/elastic_config/certs/http_ca.crt'
+       ]
      ]}
 
 # ## SSL Support
